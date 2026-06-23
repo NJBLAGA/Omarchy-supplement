@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Gmail
+Exec=chromium "https://mail.google.com/mail/?view=cm&to=%u"
+Type=Application
+MimeType=x-scheme-handler/mailto;
+NoDisplay=true
