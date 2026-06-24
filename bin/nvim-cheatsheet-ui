@@ -1,0 +1,10 @@
+#!/bin/bash
+# Runs inside the ghostty terminal — shows the nvim cheatsheet in fzf
+
+DATA="${XDG_DATA_HOME:-$HOME/.local/share}/nvim-cheatsheet.txt"
+
+cat "$DATA" | fzf --ansi --no-sort \
+  --prompt="  Nvim  " \
+  --header=$'\033[1;35mNeovim Cheatsheet\033[0m   type to search   \033[0;90mESC to close\033[0m' \
+  --layout=reverse \
+  --height=100%
