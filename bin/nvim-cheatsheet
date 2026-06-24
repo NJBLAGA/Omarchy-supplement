@@ -236,7 +236,9 @@ if [ ! -f "$DATA" ]; then
   generate > "$DATA"
 fi
 
+SCRIPT_DIR="$(cd "$(dirname "$(realpath "$0")")" && pwd)"
+
 exec setsid uwsm-app -- xdg-terminal-exec \
   --app-id=org.omarchy.nvim-cheatsheet \
   --title="Nvim Cheatsheet" \
-  -e /home/njblaga/Omarchy-supplement/bin/nvim-cheatsheet-ui
+  -e "$SCRIPT_DIR/nvim-cheatsheet-ui"

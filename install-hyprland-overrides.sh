@@ -85,4 +85,25 @@ else
     echo "Added Gmail mailto handler to $MIMEAPPS_CONFIG"
 fi
 
+# --- bin scripts ---
+
+LOCAL_BIN="$HOME/.local/bin"
+mkdir -p "$LOCAL_BIN"
+
+for script in "$SCRIPT_DIR/bin/"*; do
+    name="$(basename "$script")"
+    target="$LOCAL_BIN/$name"
+    if [ -L "$target" ]; then
+        echo "Symlink already exists: $target"
+    elif [ -f "$target" ]; then
+        echo "Backing up existing $target"
+        mv "$target" "$target.bak"
+        ln -s "$script" "$target"
+        echo "Symlink created: $target -> $script"
+    else
+        ln -s "$script" "$target"
+        echo "Symlink created: $target -> $script"
+    fi
+done
+
 echo "Hyprland overrides setup complete!"
