@@ -30,9 +30,6 @@ expected to sit there.
   replaces, each with an explanatory comment.
 - `hypridle.conf` — idle behavior: screensaver at 15 min, lock at 16 min, lock-on-sleep.
 - `gmail.desktop` — desktop entry making Gmail (via Chromium) the `mailto:` handler.
-- `bin/nvim-cheatsheet` — generates a Neovim keybinding cheatsheet and opens it in a floating
-  Ghostty terminal via fzf. Bound to `SUPER+CTRL+/`.
-- `bin/nvim-cheatsheet-ui` — the fzf UI half, run inside the terminal by the script above.
 
 ## Conventions
 
