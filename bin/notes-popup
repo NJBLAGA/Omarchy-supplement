@@ -1,0 +1,38 @@
+#!/bin/bash
+# Floating notes picker for ~/projects/notes (launched via SUPER+ALT+N).
+# Enter opens the highlighted note; Ctrl-N (or Enter with no match) creates
+# a new note named after the search query.
+
+NOTES_DIR="$HOME/projects/notes"
+mkdir -p "$NOTES_DIR"
+cd "$NOTES_DIR" || exit 1
+
+result=$(find . -name '*.md' -not -path '*/.*' | sed 's|^\./||' | sort |
+  fzf --reverse --border \
+      --prompt='Notes > ' \
+      --header='Enter: open  |  Ctrl-N: create note from query' \
+      --preview 'bat --color=always --style=numbers {}' \
+      --preview-window=right:55%:wrap \
+      --print-query \
+      --expect=ctrl-n)
+status=$?
+
+# Esc/Ctrl-C → just close
+[[ $status -eq 130 ]] && exit 0
+
+query=$(sed -n 1p <<<"$result")
+key=$(sed -n 2p <<<"$result")
+pick=$(sed -n 3p <<<"$result")
+
+if [[ "$key" == "ctrl-n" || ( -z "$pick" && -n "$query" ) ]]; then
+  title="$query"
+  slug=$(printf '%s' "$title" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/^-*//;s/-*$//')
+  [[ -z "$slug" ]] && exit 0
+  file="$NOTES_DIR/$slug.md"
+  if [[ ! -f "$file" ]]; then
+    printf '# %s\n\n- ' "$title" > "$file"
+  fi
+  exec nvim '+normal G$' +startinsert! "$file"
+elif [[ -n "$pick" ]]; then
+  exec nvim "$pick"
+fi
