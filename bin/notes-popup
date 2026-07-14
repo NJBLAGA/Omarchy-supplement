@@ -1,10 +1,9 @@
 #!/bin/bash
-# Floating notes picker for ~/projects/notes (launched via SUPER+ALT+N).
+# Floating notes picker for ~/Projects/Notes (launched via SUPER+ALT+N).
 # Enter opens the highlighted note; Ctrl-N (or Enter with no match) creates
 # a new note named after the search query.
 
-NOTES_DIR="$HOME/projects/notes"
-mkdir -p "$NOTES_DIR"
+NOTES_DIR="$HOME/Projects/Notes"
 cd "$NOTES_DIR" || exit 1
 
 result=$(find . -name '*.md' -not -path '*/.*' | sed 's|^\./||' | sort |
